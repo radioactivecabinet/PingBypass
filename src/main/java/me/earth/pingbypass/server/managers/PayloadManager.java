@@ -17,8 +17,20 @@ public class PayloadManager
     public void onPacket(ClientPluginMessagePacket packet)
     {
         PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
+        buffer.writeBytes(packet.getData());
 
-        short id = buffer.readShort();
+        short id;
+        try
+        {
+            id = buffer.readShort();
+        }
+        catch (Throwable throwable)
+        {
+            PingBypass.logger.error("Couldn't not read Id for CustomPayloadPacket.");
+            throwable.printStackTrace();
+            return;
+        }
+
         PayloadReader reader = readers.get(id);
         if (reader == null)
         {
@@ -26,8 +38,14 @@ public class PayloadManager
             return;
         }
 
-        reader.read(buffer);
-
+        try
+        {
+            reader.read(buffer);
+        }
+        catch (Throwable t)
+        {
+            t.printStackTrace();
+        }
         // buffer.release for local variables? probably important that readers
         // dont store references
     }
