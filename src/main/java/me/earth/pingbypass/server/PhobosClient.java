@@ -22,8 +22,8 @@ public class PhobosClient implements Globals
 
     public PhobosClient()
     {
-        cPacketManager = new CPacketManager(this);
         payloadManager = new PayloadManager();
+        cPacketManager = new CPacketManager(this);
     }
 
     public void prepareConnection(HandshakePacket packet)
