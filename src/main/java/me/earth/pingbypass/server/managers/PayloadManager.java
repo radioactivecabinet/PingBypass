@@ -52,15 +52,7 @@ public class PayloadManager
 
     public void register(short id, PayloadReader reader)
     {
-        if (readers.containsKey(id))
-        {
-            // TODO: multiple readers? reset reader index everytime we read
-            //  the buffer.
-            throw new IllegalStateException(
-                    "Tried to register the same id (" + id + ") twice.");
-        }
-
-        readers.put(id, reader);
+        readers.compute(id, (k, v) -> v == null ? reader : v.compose(reader));
     }
 
 }
