@@ -36,6 +36,8 @@ public class PayloadManager
     {
         if (readers.containsKey(id))
         {
+            // TODO: multiple readers? reset reader index everytime we read
+            //  the buffer.
             throw new IllegalStateException(
                     "Tried to register the same id (" + id + ") twice.");
         }
