@@ -3,7 +3,10 @@ package me.earth.pingbypass.server;
 import com.github.steveice10.mc.protocol.data.handshake.HandshakeIntent;
 import com.github.steveice10.mc.protocol.packet.handshake.client.HandshakePacket;
 import me.earth.earthhack.api.util.Globals;
+import me.earth.pingbypass.PingBypass;
 import me.earth.pingbypass.server.managers.CPacketManager;
+import me.earth.pingbypass.server.managers.PayloadManager;
+import me.earth.pingbypass.server.managers.util.PayloadUtil;
 import me.earth.pingbypass.util.wrappers.CPacketWrapper;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.multiplayer.GuiConnecting;
@@ -14,11 +17,13 @@ import net.minecraft.network.Packet;
 public class PhobosClient implements Globals
 {
     private final CPacketManager cPacketManager;
+    private final PayloadManager payloadManager;
     private HandshakePacket packet;
 
     public PhobosClient()
     {
         cPacketManager = new CPacketManager(this);
+        payloadManager = new PayloadManager();
     }
 
     public void prepareConnection(HandshakePacket packet)
@@ -57,6 +62,11 @@ public class PhobosClient implements Globals
     protected CPacketManager getPacketManager()
     {
         return cPacketManager;
+    }
+
+    public PayloadManager getPayloadManager()
+    {
+        return payloadManager;
     }
 
 }

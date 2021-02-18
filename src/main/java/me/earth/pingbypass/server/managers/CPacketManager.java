@@ -19,12 +19,13 @@ import me.earth.pingbypass.server.nethandler.NetHandlerPlayPhobos;
  */
 public class CPacketManager extends SessionAdapter implements Globals
 {
-    private final NetHandlerPlayPhobos netHandler = new NetHandlerPlayPhobos();
+    private final NetHandlerPlayPhobos netHandler;
     private final PhobosClient client;
 
     public CPacketManager(PhobosClient client)
     {
         this.client = client;
+        this.netHandler = new NetHandlerPlayPhobos(client.getPayloadManager());
     }
 
     @Override

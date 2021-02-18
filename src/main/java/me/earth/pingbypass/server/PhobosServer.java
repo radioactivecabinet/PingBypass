@@ -12,6 +12,7 @@ import me.earth.pingbypass.client.modules.servermodule.ServerModule;
 import me.earth.pingbypass.server.managers.SPacketManager;
 import me.earth.pingbypass.server.managers.ServerManager;
 import me.earth.pingbypass.server.managers.SessionManager;
+import me.earth.pingbypass.server.managers.util.PayloadUtil;
 import me.earth.pingbypass.util.server.ServerUtil;
 import me.earth.pingbypass.util.server.ShutDownHook;
 import me.earth.pingbypass.util.wrappers.SPacketWrapper;
@@ -29,6 +30,8 @@ public class PhobosServer implements Globals
     public PhobosServer(String host, int port)
     {
         sessionManager = new SessionManager();
+        PingBypass.client.getPayloadManager().register(
+                PayloadUtil.NAME, buffer -> PayloadUtil.sendNamePacket(this));
         Bus.EVENT_BUS.subscribe(new SPacketManager(this));
         createServer(host, port);
         bind();
